@@ -1,6 +1,7 @@
 require 'nokogiri'
 include Nokogiri
 require 'pp'
+Fwconfigdir  = "C:\\fw\\Language Explorer\\Configuration"
 
 def deriveContext(fn)
 	case fn
@@ -99,8 +100,11 @@ end
 
 
 
-
+saveDir = Dir.pwd
+Dir.chdir(Fwconfigdir)
 m = processFile("Main.xml")
+Dir.chdir(saveDir)
+
 
 mfinal = resolveNode(m)
 
@@ -188,7 +192,7 @@ end
 
 def genCode(c)
 	cmd = c[0]
-	printf("\"%s\":[" % c[0]["id"])
+	printf("[\"%s\",[" % c[0]["id"])
 	path = c[1]
 	if cmd["shortcut"] 
 		#pp ["shortcut", analyzeShortcut(cmd["shortcut"])]
@@ -211,10 +215,10 @@ def genCode(c)
 			printf("[\"item\",\"%s\"]," % cmd["label"].sub("_",""))
 		end
 	}
-	printf("],\n")
+	printf("]],\n")
 	#pp ["#end exec"]
 end
 
-printf "tcommands = {\n"
+printf "tcommands = [\n"
 dothese.each { |i| genCode(i) }
-printf "}\n"
+printf "]\n"
