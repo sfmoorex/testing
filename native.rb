@@ -1,7 +1,7 @@
 require 'nokogiri'
 include Nokogiri
 require 'pp'
-Fwconfigdir  = "C:\\fw\\Language Explorer\\Configuration"
+Fwconfigdir  = "C:\\FW-WW\\DistFiles\\Language Explorer\\Configuration"
 
 def deriveContext(fn)
 	case fn
@@ -205,7 +205,6 @@ def genCode(c)
 		end
 	end
 
-	#pp ["#begin exec"]
 	path.each { |i|
 		#pp ["this is a ",i]
 		case i["name"]
@@ -215,8 +214,8 @@ def genCode(c)
 			printf("[\"item\",\"%s\"]," % cmd["label"].sub("_",""))
 		end
 	}
+	printf("[\"exit\",\"cancel.png\"]")
 	printf("]],\n")
-	#pp ["#end exec"]
 end
 
 printf "tcommands = [\n"
