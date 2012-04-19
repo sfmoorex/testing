@@ -29,12 +29,11 @@ def View(viewKey,subitem,proof):
 	App.focus("FieldWorks")
 	print "viewing",viewKey,subitem
 	alt("v") 
-	click(findPattern("lexicon"))
-	#type(viewKey)
+	findPattern("lexicon")
+	type(viewKey)
 	rk()
-	click(findPattern("LexiconEdit"))
-	#dk(subitem)
-	#ek()
+	dk(subitem)
+	ek()
 	findPattern(proof)
 
 	
@@ -53,4 +52,4 @@ def findPattern(filename):
 		os.rename(f,filename )
 		App.focus("FieldWorks")
 	m = find(filename )
-	return m
+	print m

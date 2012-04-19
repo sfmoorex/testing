@@ -1,0 +1,2 @@
+#SIKULI_HOME="C:\\Program Files\\Sikuli X"
+java -jar "$SIKULI_HOME/sikuli-script.jar" $*
