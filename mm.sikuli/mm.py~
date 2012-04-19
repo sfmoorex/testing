@@ -1,8 +1,6 @@
 from sikuli import *
 import os
 
-App.focus("FieldWorks")
-setAutoWaitTimeout(10)
 
 
 def ctrl(key):
@@ -24,19 +22,21 @@ def dk(n):
 
 def findPattern(filename):
 	filename =  filename + ".png"
-	print "access:", os.access(filename,os.R_OK) 
 	if os.access(filename ,os.R_OK) == False:
-		sleep(5)
+		sleep(5) # give things time to settle down
 		print "Capture pattern for " + filename
 		f = capture("Please outline the pattern for " + filename)
 		os.rename(f,filename )
 		#App.focus("FieldWorks")
-	m = find(filename )
+	m = exists(filename)
+	print m
 	return m
 
 def getReady():
 	App.focus("FieldWorks")
+	setAutoWaitTimeout(60)
 	findPattern("FieldWorksReady")
+	setAutoWaitTimeout(10)
 
 #used for bringing up all of the View menu areas except Lists
 def switchView(menuKey,menuCategory,menuItem,stepsDown):
@@ -57,6 +57,7 @@ def listsSwitchView(menuKey,menuCategory,menuItem,stepsDown):
 	findPattern("ListMenuReady")
 	click(findPattern("Lists" + menuItem + "ClickOn"))
 	findPattern(menuCategory + menuItem + "Ready")
+	print "Done:" + menuItem
 
 
 
@@ -139,6 +140,7 @@ def newProject():
 	type("n")
 	findPattern("NewProjectDialog")
 	click(findPattern("Cancel"))
+	print "Done:" + "NewProjectDialog"
 
 	
 def openProject():
@@ -146,6 +148,7 @@ def openProject():
 	ctrl("o")
 	findPattern("OpenFileDialog")
 	click(findPattern("OpenCancel"))
+	print "Done:" + "OpenProjectDialog"
 
 def projectProperties():
 	menuReady("f","FileMenu")
@@ -154,12 +157,13 @@ def projectProperties():
 	type("w")
 	findPattern("propertiesDialog")
 	click(findPattern("propertiesCancel"))
+	print "Done:" + "ProjectProperties"
 	
 #showListsViews()
 #showNotebookViews()
 #showTextViews()
-#showLexiconViews()
-showGrammarViews()
+showLexiconViews()
+#showGrammarViews()
 newProject()
 openProject()
-projectProperties()rojectProperties()
+projectProperties()
