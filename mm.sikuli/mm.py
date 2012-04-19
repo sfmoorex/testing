@@ -20,17 +20,20 @@ def dk(n):
 	for i in range(n): 
 		type(Key.DOWN)
 
-def findPattern(filename):
-	filename =  filename + ".png"
-	if os.access(filename ,os.R_OK) == False:
+def findPattern(filename,doClick=False):
+	newfilename =  "imageFiles/" + filename + ".png"
+	print "finding:", newfilename
+	if os.access(newfilename ,os.R_OK) == False:
 		sleep(5) # give things time to settle down
 		print "Capture pattern for " + filename
 		f = capture("Please outline the pattern for " + filename)
-		os.rename(f,filename )
+		os.rename(f,newfilename )
 		#App.focus("FieldWorks")
-	m = exists(filename)
-	print m
-	return m
+	m = exists(newfilename)
+	if doClick:
+		return click(m)
+	else:
+		return m
 
 def getReady():
 	App.focus("FieldWorks")
@@ -54,9 +57,9 @@ def switchView(menuKey,menuCategory,menuItem,stepsDown):
 
 #lists don't work so well different, no telling why
 def listsSwitchView(menuKey,menuCategory,menuItem,stepsDown):
-	click(findPattern("ListButton"))
+	findPattern("ListButton",True)
 	findPattern("ListMenuReady")
-	click(findPattern("Lists" + menuItem + "ClickOn"))
+	findPattern("Lists" + menuItem + "ClickOn",True)
 	findPattern(menuCategory + menuItem + "Ready")
 	print "Done:" + menuItem
 
@@ -101,7 +104,7 @@ def showTextViews():
 	switchView("t","Texts","Concordance",1)
 	switchView("t","Texts","WordListConcordance",2)
 	switchView("t","Texts","WordAnalyses",3)
-	switchView("t","Texts","BulkEditWordForms",4)
+	switchView("tC:\Users\lsdeveloper\testing\mm.sikuli\imageFiles\OK.png","Texts","BulkEditWordForms",4)
 	switchView("t","Texts","Statistics",5)
 
 def showLexiconViews():
@@ -140,7 +143,7 @@ def newProject():
 	menuReady("f","FileMenu")
 	type("n")
 	findPattern("NewProjectDialog")
-	click(findPattern("Cancel"))
+	findPattern("Cancel",True)
 	print "Done:" + "NewProjectDialog"
 
 	
@@ -148,7 +151,7 @@ def openProject():
 	menuReady("f","FileMenu")
 	ctrl("o")
 	findPattern("OpenFileDialog")
-	click(findPattern("OpenCancel"))
+	findPattern("OpenCancel",True)
 	print "Done:" + "OpenProjectDialog"
 
 def projectProperties():
@@ -157,14 +160,66 @@ def projectProperties():
 	findPattern("propertiesMenu")
 	type("w")
 	findPattern("propertiesDialog")
-	click(findPattern("propertiesCancel"))
+	findPattern("propertiesCancel",True)
 	print "Done:" + "ProjectProperties"
+
+def InsertLexiconGoSimilar():
+	menuReady("i","InsertMenu")
+	ctrl("e")
+	findPattern("LexiconInsertDialog")
+	findPattern("LexemeFormEntry",True)
+	type("cadu")
+	findPattern("caduInList",True)
+	findPattern("SimilarEntries",True)
+
+def ConfigureDictionary():
+	switchView("l","Lexicon","Edit",0)
+	menuReady("t", "Tools")
+	type("c")
+	type("d")
+	findPattern("DictConfigDialog")
+	findPattern("HomoGraphCheck",True)
+	findPattern("HomographConfig")
+	findPattern("DisplayHomograph",True)
+	findPattern("CharacterStyle",True)
+	findPattern("CharacterStylesList")
+	findPattern("EmphasizedText",True)
+	findPattern("DictConfigCancel",True)
+
+def FindWordFormConcordance():
+	switchView("t","Texts","WordListConcordance",2)
+	ctrl("f")
+	findPattern("FindWordForm")
+	findPattern("WordFindBox",True)
+	type("munalongera")
+	findPattern("GoTo",True)
+	ctrl("f")
+	findPattern("FindWordForm")
+	findPattern("WordFindBox",True)
+	type("tiri")
+	findPattern("GoTo",True)
+	findPattern("SVOWarning")
+	findPattern("OK", True)
+	ctrl("f")
+	findPattern("FindWordForm")
+	findPattern("WordFindBox",True)
+	type("ukakwate")
+	findPattern("GoTo",True)
+
+
+
+
+
+
 	
-#showListsViews()
-#showNotebookViews()
-#showTextViews()
+FindWordFormConcordance()
 showLexiconViews()
-#showGrammarViews()
+ConfigureDictionary()
+InsertLexiconGoSimilar()
 newProject()
 openProject()
 projectProperties()
+#showListsViews()
+#showNotebookViews()
+#showTextViews()
+#showGrammarViews()
