@@ -1,0 +1,5 @@
+- The Sikuli IDE is a thin and tedious layer over the base API.   It is more trouble than it's worth.  Instead use 'sikuli-script.jar'
+TBD paste code
+
+- Use the Jing utility (TechSmith.com).   It is free, and much less cumbersome than trying to use Sikuli's IDE for capture.   One big problem with the Sikuli IDE is that you must change focus to the IDE in order to capture an image from the screen.  However, on FW (and other programs), this will cause the application where you are trying to capture an image to lose focus, which will cause dropdown menus to disappear.  With Jing, you can configure a 'Capture Hot Key'.  When you use the hotkey, Jing snapshots the screen and then allows you to outline the piece you wish to capture, including the dropdowns.  Then you are allowed to name the image file as you please.   With the Sikuli IDE, the file is named according to an OCR recognition of the area you have chosen (or failing OCR, a generated name).  The OCR is not very accurate, leading to file names that are hard to remember.
+- 
